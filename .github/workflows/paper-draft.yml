@@ -1,0 +1,37 @@
+on: [push]
+
+permissions:
+  contents: write
+  
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    name: JOSS paper draft
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Set up Git user
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Build draft PDF
+        uses: openjournals/openjournals-draft-action@master
+        with:
+          journal: joss
+          paper-path: paper/paper.md
+
+      - name: Commit PDF
+        run: |
+          git add paper/paper.pdf
+          git commit -m "Add generated PDF"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: paper
+          path: paper/paper.pdf
