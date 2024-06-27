@@ -282,10 +282,10 @@ if rank == 0 and writeData:
         sdfw_write = sdfw_recv 
         sdfp_write = sdfp_recv
     # Write all arrays to numpy format
-    np.save('assets/sdfu',sdfu_write)
-    np.save('assets/sdfv',sdfv_write)
-    np.save('assets/sdfw',sdfw_write)
-    np.save('assets/sdfp',sdfp_write)
+    np.save(str(filename)+'sdfu',sdfu_write)
+    np.save(str(filename)+'sdfv',sdfv_write)
+    np.save(str(filename)+'sdfw',sdfw_write)
+    np.save(str(filename)+'sdfp',sdfp_write)
 #
 # Print exit information
 #
